@@ -3,15 +3,16 @@ import 'package:todo_list/Task.dart';
 
 import 'Priority.dart';
 
-class Add extends StatefulWidget {
-  final Function onAdd;
-  const Add({Key? key, required this.onAdd}) : super(key: key);
+class Edit extends StatefulWidget {
+  late Task task;
+  final Function onEdit;
+  Edit({Key? key, required Task task, required this.onEdit}) : super(key: key);
 
   @override
-  State<Add> createState() => _AddState();
+  State<Edit> createState() => _EditState();
 }
 
-class _AddState extends State<Add> {
+class _EditState extends State<Edit> {
   Priority? _priority = Priority.medium;
   final myControllerTitle = TextEditingController();
   final myControllerDescription = TextEditingController();
@@ -80,7 +81,7 @@ class _AddState extends State<Add> {
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
               child: ElevatedButton(
                 onPressed: () {
-                  widget.onAdd(Task(1, myControllerTitle.text, myControllerDescription.text, _priority!!));
+                  widget.onEdit(Task(1, myControllerTitle.text, myControllerDescription.text, _priority!!));
                   Navigator.pop(context);
                 },
                 child: const Text("Adicionar"),

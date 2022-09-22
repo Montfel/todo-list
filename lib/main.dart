@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/Task.dart';
 
 import 'Add.dart';
 
@@ -41,9 +42,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  List<Task> tasks = [];
 
-  final List<String> items = <String>['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  onAddFunction(task) {
+    setState(() {
+      tasks.add(task);
+    });
+  }
+
+  onEditFunction(task) {
+    setState(() {
+      // Task taskEdit = tasks.indexOf(tas)
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +63,25 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text("To Do List"),
       ),
       body: ListView.builder(
-        itemCount: items.length,
+        itemCount: tasks.length,
         itemBuilder: (context, index) {
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: ListTile(
-              title: Text(items[index]),
+              onTap: () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => Edit(tasks[index], onEdit:onEditFunction)));
+              },
+              title: Text(tasks[index].title),
+              subtitle: Text(tasks[index].description),
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const Add()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Add(onAdd:onAddFunction)));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
