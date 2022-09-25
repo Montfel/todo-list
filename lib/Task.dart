@@ -1,19 +1,17 @@
+import 'package:uuid/uuid.dart';
+
 import 'Priority.dart';
 
 class Task {
-  int _id;
+  final String _id = const Uuid().v1();
   String _title;
   String _description;
   Priority _priority;
 
 
-  Task(this._id, this._title, this._description, this._priority);
+  Task(this._title, this._description, this._priority);
 
-  int get id => _id;
-
-  set id(int value) {
-    _id = value;
-  }
+  String get id => _id;
 
   String get title => _title;
 

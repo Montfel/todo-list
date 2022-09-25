@@ -5,6 +5,7 @@ import 'Priority.dart';
 
 class Add extends StatefulWidget {
   final Function onAdd;
+
   const Add({Key? key, required this.onAdd}) : super(key: key);
 
   @override
@@ -30,7 +31,7 @@ class _AddState extends State<Add> {
           children: [
             TextField(
               controller: myControllerTitle,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Título da tarefa',
               ),
@@ -39,13 +40,12 @@ class _AddState extends State<Add> {
               padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
               child: TextField(
                 controller: myControllerDescription,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Descrição da tarefa',
                 ),
               ),
             ),
-
             RadioListTile(
               title: const Text("Baixa"),
               value: Priority.low,
@@ -80,7 +80,8 @@ class _AddState extends State<Add> {
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
               child: ElevatedButton(
                 onPressed: () {
-                  widget.onAdd(Task(1, myControllerTitle.text, myControllerDescription.text, _priority!!));
+                  widget.onAdd(Task(myControllerTitle.text,
+                      myControllerDescription.text, _priority!));
                   Navigator.pop(context);
                 },
                 child: const Text("Adicionar"),
