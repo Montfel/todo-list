@@ -37,7 +37,7 @@ class _AddState extends State<Add> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
               child: TextField(
                 controller: myControllerDescription,
                 decoration: const InputDecoration(
@@ -46,6 +46,7 @@ class _AddState extends State<Add> {
                 ),
               ),
             ),
+            const Text("Prioridade da tarefa"),
             RadioListTile(
               title: const Text("Baixa"),
               value: Priority.low,

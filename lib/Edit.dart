@@ -14,7 +14,6 @@ class Edit extends StatefulWidget {
 }
 
 class _EditState extends State<Edit> {
-  Priority? _priority = Priority.medium;
   late String title;
   late String description;
 
@@ -26,7 +25,7 @@ class _EditState extends State<Edit> {
     myControllerDescription.text = widget.task.description;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Adicione uma tarefa"),
+        title: const Text("Edite uma tarefa"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -40,7 +39,7 @@ class _EditState extends State<Edit> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
               child: TextField(
                 controller: myControllerDescription,
                 decoration: const InputDecoration(
@@ -49,33 +48,34 @@ class _EditState extends State<Edit> {
                 ),
               ),
             ),
+            const Text("Prioridade da tarefa"),
             RadioListTile(
               title: const Text("Baixa"),
               value: Priority.low,
-              groupValue: _priority,
+              groupValue: widget.task.priority,
               onChanged: (Priority? value) {
                 setState(() {
-                  _priority = value;
+                  widget.task.priority = value!;
                 });
               },
             ),
             RadioListTile(
               title: const Text("Média"),
               value: Priority.medium,
-              groupValue: _priority,
+              groupValue: widget.task.priority,
               onChanged: (Priority? value) {
                 setState(() {
-                  _priority = value;
+                  widget.task.priority = value!;
                 });
               },
             ),
             RadioListTile(
               title: const Text("Alta"),
               value: Priority.high,
-              groupValue: _priority,
+              groupValue: widget.task.priority,
               onChanged: (Priority? value) {
                 setState(() {
-                  _priority = value;
+                  widget.task.priority = value!;
                 });
               },
             ),
@@ -85,11 +85,10 @@ class _EditState extends State<Edit> {
                 onPressed: () {
                   widget.task.title = myControllerTitle.text;
                   widget.task.description = myControllerDescription.text;
-                  widget.task.priority = _priority!;
                   widget.onEdit(widget.task);
                   Navigator.pop(context);
                 },
-                child: const Text("Adicionar"),
+                child: const Text("Editar"),
               ),
             ),
           ],

@@ -70,6 +70,32 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) =>
                             Edit(tasks[index], onEdit: onEditFunction)));
               },
+              onLongPress: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        AlertDialog(
+                          title: const Text("Excluir tarefa"),
+                          content: const Text("Deseja excluir a tarefa?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  tasks.removeAt(index);
+                                });
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Sim"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Não"),
+                            ),
+                          ],
+                        ));
+              },
               title: Text(tasks[index].title),
               subtitle: Text(tasks[index].description),
             ),
