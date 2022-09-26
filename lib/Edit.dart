@@ -16,6 +16,7 @@ class Edit extends StatefulWidget {
 class _EditState extends State<Edit> {
   late String title;
   late String description;
+  late DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,8 @@ class _EditState extends State<Edit> {
     myControllerTitle.text = widget.task.title;
     TextEditingController myControllerDescription = TextEditingController();
     myControllerDescription.text = widget.task.description;
+    TextEditingController myControllerDate = TextEditingController();
+    myControllerDate.text = '${widget.task.date.day}/${widget.task.date.month}/${widget.task.date.year}';
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edite uma tarefa"),
@@ -45,6 +48,28 @@ class _EditState extends State<Edit> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Descrição da tarefa',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+              child: TextField(
+                readOnly: true,
+                onTap: () async {
+                  DateTime? newDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2030));
+                  if (newDate == null) return;
+                  setState(() {
+                    date = newDate;
+                  });
+                },
+                controller: myControllerDate,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Data da tarefa',
                 ),
               ),
             ),
@@ -85,6 +110,7 @@ class _EditState extends State<Edit> {
                 onPressed: () {
                   widget.task.title = myControllerTitle.text;
                   widget.task.description = myControllerDescription.text;
+                  widget.task.date = date;
                   widget.onEdit(widget.task);
                   Navigator.pop(context);
                 },

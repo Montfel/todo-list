@@ -16,11 +16,14 @@ class _AddState extends State<Add> {
   Priority? _priority = Priority.medium;
   final myControllerTitle = TextEditingController();
   final myControllerDescription = TextEditingController();
+  final myControllerDate = TextEditingController();
   late String title;
   late String description;
+  DateTime date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
+    myControllerDate.text = '${date.day}/${date.month}/${date.year}';
     return Scaffold(
       appBar: AppBar(
         title: const Text("Adicione uma tarefa"),
@@ -43,6 +46,28 @@ class _AddState extends State<Add> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Descrição da tarefa',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+              child: TextField(
+                readOnly: true,
+                onTap: () async {
+                  DateTime? newDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2030));
+                  if (newDate == null) return;
+                  setState(() {
+                    date = newDate;
+                  });
+                },
+                controller: myControllerDate,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Data da tarefa',
                 ),
               ),
             ),
@@ -82,7 +107,7 @@ class _AddState extends State<Add> {
               child: ElevatedButton(
                 onPressed: () {
                   widget.onAdd(Task(myControllerTitle.text,
-                      myControllerDescription.text, _priority!));
+                      myControllerDescription.text, date, _priority!));
                   Navigator.pop(context);
                 },
                 child: const Text("Adicionar"),
