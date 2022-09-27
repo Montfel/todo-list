@@ -72,11 +72,8 @@ class _AddState extends State<Add> {
               ),
             ),
             const Text("Prioridade da tarefa"),
-            Row(
-              children: [
-                Expanded(
-                  child: RadioListTile(
-                    title: const Text("Baixa"),
+            RadioListTile(
+                    title: const Text("Baixa" , style: TextStyle(fontSize: 15),),
                     value: Priority.low,
                     groupValue: _priority,
                     onChanged: (Priority? value) {
@@ -85,10 +82,8 @@ class _AddState extends State<Add> {
                       });
                     },
                   ),
-                ),
-                Expanded(
-                  child: RadioListTile(
-                    title: const Text("Média"),
+            RadioListTile(
+                    title: const Text("Média",style: TextStyle(fontSize: 15),),
                     value: Priority.medium,
                     groupValue: _priority,
                     onChanged: (Priority? value) {
@@ -97,11 +92,9 @@ class _AddState extends State<Add> {
                       });
                     },
                   ),
-                ),
 
-                Expanded(
-                  child: RadioListTile(
-                    title: const Text("Alta"),
+            RadioListTile(
+                    title: const Text("Alta", style: TextStyle(fontSize: 15),),
                     value: Priority.high,
                     groupValue: _priority,
                     onChanged: (Priority? value) {
@@ -110,10 +103,6 @@ class _AddState extends State<Add> {
                       });
                     },
                   ),
-                ),
-
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: ElevatedButton(

@@ -74,11 +74,8 @@ class _EditState extends State<Edit> {
               ),
             ),
             const Text("Prioridade da tarefa"),
-            Row(
-              children: [
-                Expanded(
-                  child: RadioListTile(
-                    title: const Text("Baixa"),
+            RadioListTile(
+                    title: const Text("Baixa" , style: TextStyle(fontSize: 15),),
                     value: Priority.low,
                     groupValue: widget.task.priority,
                     onChanged: (Priority? value) {
@@ -87,10 +84,8 @@ class _EditState extends State<Edit> {
                       });
                     },
                   ),
-                ),
-                Expanded(
-                  child:RadioListTile(
-                  title: const Text("Média"),
+            RadioListTile(
+                  title: const Text("Média" , style: TextStyle(fontSize: 15),),
                   value: Priority.medium,
                   groupValue: widget.task.priority,
                   onChanged: (Priority? value) {
@@ -99,10 +94,8 @@ class _EditState extends State<Edit> {
                     });
                   },
                 ),
-                ),
-                Expanded(
-                  child:RadioListTile(
-                  title: const Text("Alta"),
+            RadioListTile(
+                  title: const Text("Alta", style: TextStyle(fontSize: 15),),
                   value: Priority.high,
                   groupValue: widget.task.priority,
                   onChanged: (Priority? value) {
@@ -111,9 +104,9 @@ class _EditState extends State<Edit> {
                     });
                   },
                 ),
-                )
-              ],
-            ),
+
+
+
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: ElevatedButton(
