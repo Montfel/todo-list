@@ -72,38 +72,50 @@ class _AddState extends State<Add> {
               ),
             ),
             const Text("Prioridade da tarefa"),
-            RadioListTile(
-              title: const Text("Baixa"),
-              value: Priority.low,
-              groupValue: _priority,
-              onChanged: (Priority? value) {
-                setState(() {
-                  _priority = value;
-                });
-              },
-            ),
-            RadioListTile(
-              title: const Text("Média"),
-              value: Priority.medium,
-              groupValue: _priority,
-              onChanged: (Priority? value) {
-                setState(() {
-                  _priority = value;
-                });
-              },
-            ),
-            RadioListTile(
-              title: const Text("Alta"),
-              value: Priority.high,
-              groupValue: _priority,
-              onChanged: (Priority? value) {
-                setState(() {
-                  _priority = value;
-                });
-              },
+            Row(
+              children: [
+                Expanded(
+                  child: RadioListTile(
+                    title: const Text("Baixa"),
+                    value: Priority.low,
+                    groupValue: _priority,
+                    onChanged: (Priority? value) {
+                      setState(() {
+                        _priority = value;
+                      });
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: RadioListTile(
+                    title: const Text("Média"),
+                    value: Priority.medium,
+                    groupValue: _priority,
+                    onChanged: (Priority? value) {
+                      setState(() {
+                        _priority = value;
+                      });
+                    },
+                  ),
+                ),
+
+                Expanded(
+                  child: RadioListTile(
+                    title: const Text("Alta"),
+                    value: Priority.high,
+                    groupValue: _priority,
+                    onChanged: (Priority? value) {
+                      setState(() {
+                        _priority = value;
+                      });
+                    },
+                  ),
+                ),
+
+              ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: ElevatedButton(
                 onPressed: () {
                   widget.onAdd(Task(myControllerTitle.text,

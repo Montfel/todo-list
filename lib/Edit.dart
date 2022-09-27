@@ -74,38 +74,48 @@ class _EditState extends State<Edit> {
               ),
             ),
             const Text("Prioridade da tarefa"),
-            RadioListTile(
-              title: const Text("Baixa"),
-              value: Priority.low,
-              groupValue: widget.task.priority,
-              onChanged: (Priority? value) {
-                setState(() {
-                  widget.task.priority = value!;
-                });
-              },
-            ),
-            RadioListTile(
-              title: const Text("Média"),
-              value: Priority.medium,
-              groupValue: widget.task.priority,
-              onChanged: (Priority? value) {
-                setState(() {
-                  widget.task.priority = value!;
-                });
-              },
-            ),
-            RadioListTile(
-              title: const Text("Alta"),
-              value: Priority.high,
-              groupValue: widget.task.priority,
-              onChanged: (Priority? value) {
-                setState(() {
-                  widget.task.priority = value!;
-                });
-              },
+            Row(
+              children: [
+                Expanded(
+                  child: RadioListTile(
+                    title: const Text("Baixa"),
+                    value: Priority.low,
+                    groupValue: widget.task.priority,
+                    onChanged: (Priority? value) {
+                      setState(() {
+                        widget.task.priority = value!;
+                      });
+                    },
+                  ),
+                ),
+                Expanded(
+                  child:RadioListTile(
+                  title: const Text("Média"),
+                  value: Priority.medium,
+                  groupValue: widget.task.priority,
+                  onChanged: (Priority? value) {
+                    setState(() {
+                      widget.task.priority = value!;
+                    });
+                  },
+                ),
+                ),
+                Expanded(
+                  child:RadioListTile(
+                  title: const Text("Alta"),
+                  value: Priority.high,
+                  groupValue: widget.task.priority,
+                  onChanged: (Priority? value) {
+                    setState(() {
+                      widget.task.priority = value!;
+                    });
+                  },
+                ),
+                )
+              ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: ElevatedButton(
                 onPressed: () {
                   widget.task.title = myControllerTitle.text;
