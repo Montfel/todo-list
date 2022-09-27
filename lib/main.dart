@@ -38,30 +38,34 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final ButtonStyle style =
-  ElevatedButton.styleFrom(minimumSize: const Size(50, 50), elevation: 3, backgroundColor: Colors.green, textStyle: const TextStyle(fontSize: 20));
+  ElevatedButton.styleFrom(minimumSize: const Size(50, 50),
+      elevation: 3,
+      backgroundColor: Colors.green,
+      textStyle: const TextStyle(fontSize: 20));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text("Welcome to your ToDoApp",style: TextStyle(fontSize: 30)),
-          const Image(image: AssetImage("lib/images/todo_logo.png"))
-          ,
-          ElevatedButton(
-            style: style,
-            onPressed: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(
-              builder: (context) => const ListTasks()));
-
-            },
-            child: const Text("Iniciar"),
-          ),
-        ],
-      )
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+                "Welcome to your ToDoApp",
+                style: TextStyle(fontSize: 20)
+            ),
+            const Image(image: AssetImage("lib/images/todo_logo.png")),
+            ElevatedButton(
+              style: style,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ListTasks()));
+              },
+              child: const Text("Iniciar"),
+            ),
+          ],
+        )
     );
   }
 }

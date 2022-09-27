@@ -14,10 +14,6 @@ class Edit extends StatefulWidget {
 }
 
 class _EditState extends State<Edit> {
-  late String title;
-  late String description;
-  late DateTime date;
-
   @override
   Widget build(BuildContext context) {
     TextEditingController myControllerTitle = TextEditingController();
@@ -25,7 +21,8 @@ class _EditState extends State<Edit> {
     TextEditingController myControllerDescription = TextEditingController();
     myControllerDescription.text = widget.task.description;
     TextEditingController myControllerDate = TextEditingController();
-    myControllerDate.text = '${widget.task.date.day}/${widget.task.date.month}/${widget.task.date.year}';
+    myControllerDate.text =
+        '${widget.task.date.day}/${widget.task.date.month}/${widget.task.date.year}';
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edite uma tarefa"),
@@ -63,7 +60,7 @@ class _EditState extends State<Edit> {
                       lastDate: DateTime(2030));
                   if (newDate == null) return;
                   setState(() {
-                    date = newDate;
+                    widget.task.date = newDate;
                   });
                 },
                 controller: myControllerDate,
@@ -75,45 +72,50 @@ class _EditState extends State<Edit> {
             ),
             const Text("Prioridade da tarefa"),
             RadioListTile(
-                    title: const Text("Baixa" , style: TextStyle(fontSize: 15),),
-                    value: Priority.low,
-                    groupValue: widget.task.priority,
-                    onChanged: (Priority? value) {
-                      setState(() {
-                        widget.task.priority = value!;
-                      });
-                    },
-                  ),
+              title: const Text(
+                "Baixa",
+                style: TextStyle(fontSize: 15),
+              ),
+              value: Priority.low,
+              groupValue: widget.task.priority,
+              onChanged: (Priority? value) {
+                setState(() {
+                  widget.task.priority = value!;
+                });
+              },
+            ),
             RadioListTile(
-                  title: const Text("Média" , style: TextStyle(fontSize: 15),),
-                  value: Priority.medium,
-                  groupValue: widget.task.priority,
-                  onChanged: (Priority? value) {
-                    setState(() {
-                      widget.task.priority = value!;
-                    });
-                  },
-                ),
+              title: const Text(
+                "Média",
+                style: TextStyle(fontSize: 15),
+              ),
+              value: Priority.medium,
+              groupValue: widget.task.priority,
+              onChanged: (Priority? value) {
+                setState(() {
+                  widget.task.priority = value!;
+                });
+              },
+            ),
             RadioListTile(
-                  title: const Text("Alta", style: TextStyle(fontSize: 15),),
-                  value: Priority.high,
-                  groupValue: widget.task.priority,
-                  onChanged: (Priority? value) {
-                    setState(() {
-                      widget.task.priority = value!;
-                    });
-                  },
-                ),
-
-
-
+              title: const Text(
+                "Alta",
+                style: TextStyle(fontSize: 15),
+              ),
+              value: Priority.high,
+              groupValue: widget.task.priority,
+              onChanged: (Priority? value) {
+                setState(() {
+                  widget.task.priority = value!;
+                });
+              },
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: ElevatedButton(
                 onPressed: () {
                   widget.task.title = myControllerTitle.text;
                   widget.task.description = myControllerDescription.text;
-                  widget.task.date = date;
                   widget.onEdit(widget.task);
                   Navigator.pop(context);
                 },
