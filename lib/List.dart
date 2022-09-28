@@ -15,7 +15,6 @@ class ListTasks extends StatefulWidget {
 
 class _ListTasksState extends State<ListTasks> {
 
-
   List<Task> tasks = [];
 
   onAddFunction(task) {
@@ -30,8 +29,6 @@ class _ListTasksState extends State<ListTasks> {
       tasks[taskId] = task;
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {

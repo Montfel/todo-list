@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:todo_list/Task.dart';
 
 import 'Priority.dart';
+import 'RadioGroup.dart';
+import 'DateField.dart';
 
 class Edit extends StatefulWidget {
   late Task task;
@@ -16,13 +18,19 @@ class Edit extends StatefulWidget {
 class _EditState extends State<Edit> {
   @override
   Widget build(BuildContext context) {
+    onPriorityClick(value) {
+      widget.task.priority = value;
+    }
+
+    onDateClick(value) {
+      widget.task.date = value;
+    }
+
     TextEditingController myControllerTitle = TextEditingController();
     myControllerTitle.text = widget.task.title;
     TextEditingController myControllerDescription = TextEditingController();
     myControllerDescription.text = widget.task.description;
-    TextEditingController myControllerDate = TextEditingController();
-    myControllerDate.text =
-        '${widget.task.date.day}/${widget.task.date.month}/${widget.task.date.year}';
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edite uma tarefa"),
@@ -50,67 +58,11 @@ class _EditState extends State<Edit> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: TextField(
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? newDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime(2030));
-                    if (newDate == null) return;
-                    setState(() {
-                      widget.task.date = newDate;
-                    });
-                  },
-                  controller: myControllerDate,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Data da tarefa',
-                  ),
-                ),
-              ),
+                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  child: DateField(widget.task.date, onDateClick: onDateClick)),
               const Text("Prioridade da tarefa"),
-              RadioListTile(
-                title: const Text(
-                  "Baixa",
-                  style: TextStyle(fontSize: 15),
-                ),
-                value: Priority.low,
-                groupValue: widget.task.priority,
-                onChanged: (Priority? value) {
-                  setState(() {
-                    widget.task.priority = value!;
-                  });
-                },
-              ),
-              RadioListTile(
-                title: const Text(
-                  "Média",
-                  style: TextStyle(fontSize: 15),
-                ),
-                value: Priority.medium,
-                groupValue: widget.task.priority,
-                onChanged: (Priority? value) {
-                  setState(() {
-                    widget.task.priority = value!;
-                  });
-                },
-              ),
-              RadioListTile(
-                title: const Text(
-                  "Alta",
-                  style: TextStyle(fontSize: 15),
-                ),
-                value: Priority.high,
-                groupValue: widget.task.priority,
-                onChanged: (Priority? value) {
-                  setState(() {
-                    widget.task.priority = value!;
-                  });
-                },
-              ),
+              RadioGroup(widget.task.priority,
+                  onPriorityClick: onPriorityClick),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: ElevatedButton(
