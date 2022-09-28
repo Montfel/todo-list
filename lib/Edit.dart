@@ -27,102 +27,104 @@ class _EditState extends State<Edit> {
       appBar: AppBar(
         title: const Text("Edite uma tarefa"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: myControllerTitle,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Título da tarefa',
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: TextField(
-                controller: myControllerDescription,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: myControllerTitle,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Descrição da tarefa',
+                  labelText: 'Título da tarefa',
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: TextField(
-                readOnly: true,
-                onTap: () async {
-                  DateTime? newDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2030));
-                  if (newDate == null) return;
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                child: TextField(
+                  controller: myControllerDescription,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Descrição da tarefa',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                child: TextField(
+                  readOnly: true,
+                  onTap: () async {
+                    DateTime? newDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2030));
+                    if (newDate == null) return;
+                    setState(() {
+                      widget.task.date = newDate;
+                    });
+                  },
+                  controller: myControllerDate,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Data da tarefa',
+                  ),
+                ),
+              ),
+              const Text("Prioridade da tarefa"),
+              RadioListTile(
+                title: const Text(
+                  "Baixa",
+                  style: TextStyle(fontSize: 15),
+                ),
+                value: Priority.low,
+                groupValue: widget.task.priority,
+                onChanged: (Priority? value) {
                   setState(() {
-                    widget.task.date = newDate;
+                    widget.task.priority = value!;
                   });
                 },
-                controller: myControllerDate,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Data da tarefa',
+              ),
+              RadioListTile(
+                title: const Text(
+                  "Média",
+                  style: TextStyle(fontSize: 15),
+                ),
+                value: Priority.medium,
+                groupValue: widget.task.priority,
+                onChanged: (Priority? value) {
+                  setState(() {
+                    widget.task.priority = value!;
+                  });
+                },
+              ),
+              RadioListTile(
+                title: const Text(
+                  "Alta",
+                  style: TextStyle(fontSize: 15),
+                ),
+                value: Priority.high,
+                groupValue: widget.task.priority,
+                onChanged: (Priority? value) {
+                  setState(() {
+                    widget.task.priority = value!;
+                  });
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.task.title = myControllerTitle.text;
+                    widget.task.description = myControllerDescription.text;
+                    widget.onEdit(widget.task);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Editar"),
                 ),
               ),
-            ),
-            const Text("Prioridade da tarefa"),
-            RadioListTile(
-              title: const Text(
-                "Baixa",
-                style: TextStyle(fontSize: 15),
-              ),
-              value: Priority.low,
-              groupValue: widget.task.priority,
-              onChanged: (Priority? value) {
-                setState(() {
-                  widget.task.priority = value!;
-                });
-              },
-            ),
-            RadioListTile(
-              title: const Text(
-                "Média",
-                style: TextStyle(fontSize: 15),
-              ),
-              value: Priority.medium,
-              groupValue: widget.task.priority,
-              onChanged: (Priority? value) {
-                setState(() {
-                  widget.task.priority = value!;
-                });
-              },
-            ),
-            RadioListTile(
-              title: const Text(
-                "Alta",
-                style: TextStyle(fontSize: 15),
-              ),
-              value: Priority.high,
-              groupValue: widget.task.priority,
-              onChanged: (Priority? value) {
-                setState(() {
-                  widget.task.priority = value!;
-                });
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: ElevatedButton(
-                onPressed: () {
-                  widget.task.title = myControllerTitle.text;
-                  widget.task.description = myControllerDescription.text;
-                  widget.onEdit(widget.task);
-                  Navigator.pop(context);
-                },
-                child: const Text("Editar"),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

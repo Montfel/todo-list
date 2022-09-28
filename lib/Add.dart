@@ -28,93 +28,95 @@ class _AddState extends State<Add> {
       appBar: AppBar(
         title: const Text("Adicione uma tarefa"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: myControllerTitle,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Título da tarefa',
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: TextField(
-                controller: myControllerDescription,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: myControllerTitle,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Descrição da tarefa',
+                  labelText: 'Título da tarefa',
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: TextField(
-                readOnly: true,
-                onTap: () async {
-                  DateTime? newDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2030));
-                  if (newDate == null) return;
-                  setState(() {
-                    date = newDate;
-                  });
-                },
-                controller: myControllerDate,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Data da tarefa',
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                child: TextField(
+                  controller: myControllerDescription,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Descrição da tarefa',
+                  ),
                 ),
               ),
-            ),
-            const Text("Prioridade da tarefa"),
-            RadioListTile(
-                    title: const Text("Baixa" , style: TextStyle(fontSize: 15),),
-                    value: Priority.low,
-                    groupValue: _priority,
-                    onChanged: (Priority? value) {
-                      setState(() {
-                        _priority = value;
-                      });
-                    },
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                child: TextField(
+                  readOnly: true,
+                  onTap: () async {
+                    DateTime? newDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2030));
+                    if (newDate == null) return;
+                    setState(() {
+                      date = newDate;
+                    });
+                  },
+                  controller: myControllerDate,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Data da tarefa',
                   ),
-            RadioListTile(
-                    title: const Text("Média",style: TextStyle(fontSize: 15),),
-                    value: Priority.medium,
-                    groupValue: _priority,
-                    onChanged: (Priority? value) {
-                      setState(() {
-                        _priority = value;
-                      });
-                    },
-                  ),
+                ),
+              ),
+              const Text("Prioridade da tarefa"),
+              RadioListTile(
+                      title: const Text("Baixa" , style: TextStyle(fontSize: 15),),
+                      value: Priority.low,
+                      groupValue: _priority,
+                      onChanged: (Priority? value) {
+                        setState(() {
+                          _priority = value;
+                        });
+                      },
+                    ),
+              RadioListTile(
+                      title: const Text("Média",style: TextStyle(fontSize: 15),),
+                      value: Priority.medium,
+                      groupValue: _priority,
+                      onChanged: (Priority? value) {
+                        setState(() {
+                          _priority = value;
+                        });
+                      },
+                    ),
 
-            RadioListTile(
-                    title: const Text("Alta", style: TextStyle(fontSize: 15),),
-                    value: Priority.high,
-                    groupValue: _priority,
-                    onChanged: (Priority? value) {
-                      setState(() {
-                        _priority = value;
-                      });
-                    },
-                  ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: ElevatedButton(
-                onPressed: () {
-                  widget.onAdd(Task(myControllerTitle.text,
-                      myControllerDescription.text, date, _priority!));
-                  Navigator.pop(context);
-                },
-                child: const Text("Adicionar"),
+              RadioListTile(
+                      title: const Text("Alta", style: TextStyle(fontSize: 15),),
+                      value: Priority.high,
+                      groupValue: _priority,
+                      onChanged: (Priority? value) {
+                        setState(() {
+                          _priority = value;
+                        });
+                      },
+                    ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.onAdd(Task(myControllerTitle.text,
+                        myControllerDescription.text, date, _priority!));
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Adicionar"),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
