@@ -1,4 +1,5 @@
 import 'package:uuid/uuid.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'Priority.dart';
 
@@ -8,6 +9,9 @@ class Task {
   String _description;
   DateTime _date;
   Priority _priority;
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
 
   Task(this._title, this._description, this._date, this._priority);
 
