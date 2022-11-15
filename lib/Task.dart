@@ -10,9 +10,6 @@ class Task {
   DateTime _date;
   Priority _priority;
 
-  FirebaseAuth auth = FirebaseAuth.instance;
-
-
   Task(this._title, this._description, this._date, this._priority);
 
   String get id => _id;
