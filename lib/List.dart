@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_list/Task.dart';
 
 import 'Add.dart';
 import 'Edit.dart';
+import 'GoogleSignInProvider.dart';
+import 'package:provider/provider.dart';
 
 
 class ListTasks extends StatefulWidget {
@@ -32,9 +34,23 @@ class _ListTasksState extends State<ListTasks> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("To Do List"),
+        actions: [
+          IconButton(
+            icon: CircleAvatar(
+              radius: 40,
+              backgroundImage: NetworkImage(user.photoURL!),
+            ),
+            onPressed: () {
+              final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+              provider.logout();
+            },
+          )
+        ],
       ),
       body: Column(
         children: [
