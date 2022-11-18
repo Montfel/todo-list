@@ -1,12 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list/Task.dart';
 
 import 'Priority.dart';
 
 class Add extends StatefulWidget {
-  final Function onAdd;
-
-  const Add({Key? key, required this.onAdd}) : super(key: key);
+  const Add({Key? key}) : super(key: key);
 
   @override
   State<Add> createState() => _AddState();
@@ -74,42 +73,50 @@ class _AddState extends State<Add> {
               ),
               const Text("Prioridade da tarefa"),
               RadioListTile(
-                      title: const Text("Baixa" , style: TextStyle(fontSize: 15),),
-                      value: Priority.low,
-                      groupValue: _priority,
-                      onChanged: (Priority? value) {
-                        setState(() {
-                          _priority = value;
-                        });
-                      },
-                    ),
+                title: const Text(
+                  "Baixa",
+                  style: TextStyle(fontSize: 15),
+                ),
+                value: Priority.low,
+                groupValue: _priority,
+                onChanged: (Priority? value) {
+                  setState(() {
+                    _priority = value;
+                  });
+                },
+              ),
               RadioListTile(
-                      title: const Text("Média",style: TextStyle(fontSize: 15),),
-                      value: Priority.medium,
-                      groupValue: _priority,
-                      onChanged: (Priority? value) {
-                        setState(() {
-                          _priority = value;
-                        });
-                      },
-                    ),
-
+                title: const Text(
+                  "Média",
+                  style: TextStyle(fontSize: 15),
+                ),
+                value: Priority.medium,
+                groupValue: _priority,
+                onChanged: (Priority? value) {
+                  setState(() {
+                    _priority = value;
+                  });
+                },
+              ),
               RadioListTile(
-                      title: const Text("Alta", style: TextStyle(fontSize: 15),),
-                      value: Priority.high,
-                      groupValue: _priority,
-                      onChanged: (Priority? value) {
-                        setState(() {
-                          _priority = value;
-                        });
-                      },
-                    ),
+                title: const Text(
+                  "Alta",
+                  style: TextStyle(fontSize: 15),
+                ),
+                value: Priority.high,
+                groupValue: _priority,
+                onChanged: (Priority? value) {
+                  setState(() {
+                    _priority = value;
+                  });
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: ElevatedButton(
                   onPressed: () {
-                    widget.onAdd(Task(myControllerTitle.text,
-                        myControllerDescription.text, date, _priority!));
+                    createTask(myControllerTitle.text,
+                        myControllerDescription.text, date, _priority!);
                     Navigator.pop(context);
                   },
                   child: const Text("Adicionar"),
@@ -120,5 +127,18 @@ class _AddState extends State<Add> {
         ),
       ),
     );
+  }
+
+  Future createTask(String title, String description, DateTime date,
+      Priority priority) async {
+    final docTask = FirebaseFirestore.instance.collection('tasks').doc();
+    final task = Task(
+        id: docTask.id,
+        title: title,
+        description: description,
+        date: date,
+        priority: priority);
+    final json = task.toJson();
+    await docTask.set(json);
   }
 }

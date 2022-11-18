@@ -1,15 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list/Task.dart';
 
+import 'DateField.dart';
 import 'Priority.dart';
 import 'RadioGroup.dart';
-import 'DateField.dart';
 
 class Edit extends StatefulWidget {
   late Task task;
-  final Function onEdit;
 
-  Edit(this.task, {Key? key, required this.onEdit}) : super(key: key);
+  Edit(this.task, {Key? key}) : super(key: key);
 
   @override
   State<Edit> createState() => _EditState();
@@ -69,7 +69,12 @@ class _EditState extends State<Edit> {
                   onPressed: () {
                     widget.task.title = myControllerTitle.text;
                     widget.task.description = myControllerDescription.text;
-                    widget.onEdit(widget.task);
+                    updateTask(
+                        widget.task.id,
+                        myControllerTitle.text,
+                        myControllerDescription.text,
+                        widget.task.date,
+                        widget.task.priority);
                     Navigator.pop(context);
                   },
                   child: const Text("Editar"),
@@ -80,5 +85,16 @@ class _EditState extends State<Edit> {
         ),
       ),
     );
+  }
+
+  Future updateTask(String id, String title, String description, DateTime date,
+      Priority priority) async {
+    final docTask = FirebaseFirestore.instance.collection('tasks').doc(id);
+    docTask.update({
+      'title': title,
+      'description': description,
+      'date': date.toString(),
+      'priority': priority.index,
+    });
   }
 }
